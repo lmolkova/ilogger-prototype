@@ -3,6 +3,7 @@ using Azure.Core.Pipeline;
 using test;
 using Microsoft.Extensions.Logging;
 using OpenTelemetry.Logs;
+using Microsoft.Extensions.Logging.EventSource;
 
 var factory = LoggerFactory.Create(builder => builder
 .AddEventSourceLogger()

@@ -17,7 +17,7 @@ internal partial class AzureCoreHttpLogger
     {
         if (_logger.IsEnabled(LogLevel.Information))
         {
-            Request(_logger, request.ClientRequestId, request.Method.ToString(), request.Uri.ToString(), request.Headers.Select(x => new KeyValuePair<string, string>(x.Name, x.Value)).ToList());
+            Request(_logger, request.ClientRequestId, request.Method.ToString(), request.Uri.ToString(), request.Headers.Select(x => new KeyValuePair<string, string>(x.Name, x.Value)).ToArray());
         }
     }
 
