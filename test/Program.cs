@@ -2,11 +2,12 @@
 using Azure.Core.Pipeline;
 using test;
 using Microsoft.Extensions.Logging;
+using OpenTelemetry.Logs;
 
 var factory = LoggerFactory.Create(builder => builder
 .AddEventSourceLogger()
-//.AddOpenTelemetry(c => c.AddConsoleExporter())
-.AddConsole()
+.AddOpenTelemetry(c => c.AddConsoleExporter())
+//.AddConsole()
 );
 
 var loggingPolicy = new AzureLoggingPolicy(new AzureCoreHttpLogger(factory, "OpenAI"));
