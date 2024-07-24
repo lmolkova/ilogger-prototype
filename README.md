@@ -47,6 +47,8 @@ LogRecord.EventName:               Request
 
 #### PerfView
 
+Formatted message:
+
 ```log
 <Event MSec=  "1405.5490" PID="55248" PName=    "test" TID="2936" EventName="FormattedMessage"
   TimeStamp="07/23/24 20:23:05.112944" ID="65279" Version="0" Keywords="0x0000F00000000004" TimeStampQPC="11,910,427,008,267" QPCTime="0.100us"
@@ -55,6 +57,19 @@ LogRecord.EventName:               Request
   CPU="10" EventIndex="173370" TemplateType="DynamicTraceEventData">
   <PrettyPrint>
     <Event MSec=  "1405.5490" PID="55248" PName=    "test" TID="2936" EventName="FormattedMessage" ProviderName="Microsoft-Extensions-Logging" Level="2" FactoryID="1" LoggerName="OpenAI.Http" EventId="1" EventName="Request" _FormattedMessage="HTTP Request clientRequestId=42, method=GET, uri=https://microsoft.com/, headers={&quot;x-ms-client-request-id&quot;=&quot;42&quot;,&quot;x-ms-return-client-request-id&quot;=&quot;true&quot;,&quot;User-Agent&quot;=&quot;azsdk-net-test/1.0.0 (.NET 8.0.7; Microsoft Windows 10.0.22631)&quot;}"/>
+  </PrettyPrint>
+```
+
+Message:
+
+```log
+<Event MSec=  "1840.4840" PID="54588" PName=    "test" TID="41048" EventName="Message"
+  TimeStamp="07/24/24 09:52:43.852688" ID="65278" Version="0" Keywords="0x0000F00000000002" TimeStampQPC="12,396,185,312,245" QPCTime="0.100us"
+  Level="Always" ProviderName="Microsoft-Extensions-Logging" ProviderGuid="3ac73b97-af73-50e9-0822-5da4367920d0" ClassicProvider="False" ProcessorNumber="2"
+  Opcode="0" Task="Default" Channel="11" PointerSize="8"
+  CPU="2" EventIndex="181217" TemplateType="DynamicTraceEventData">
+  <PrettyPrint>
+    <Event MSec=  "1840.4840" PID="54588" PName=    "test" TID="41048" EventName="Message" ProviderName="Microsoft-Extensions-Logging" Level="2" FactoryID="2" LoggerName="OpenAI.Http" EventId="1" EventName="Request" Exception="{ &quot;TypeName&quot;:&quot;&quot;, &quot;Message&quot;:&quot;&quot;, &quot;HResult&quot;:0, &quot;VerboseMessage&quot;:&quot;&quot; }" Arguments="[{OriginalFormat}-&gt;&quot;HTTP Request clientRequestId={clientRequestId}, method={method}, uri={uri}, headers={headers}&quot;,headers-&gt;&quot;{&quot;x-ms-client-request-id&quot;=&quot;42&quot;,&quot;x-ms-return-client-request-id&quot;=&quot;true&quot;,&quot;User-Agent&quot;=&quot;azsdk-net-test/1.0.0 (.NET 8.0.7; Microsoft Windows 10.0.22631)&quot;}&quot;,uri-&gt;&quot;https://microsoft.com/&quot;,method-&gt;&quot;GET&quot;,clientRequestId-&gt;&quot;42&quot;]"/>
   </PrettyPrint>
 ```
 
@@ -76,5 +91,5 @@ LogRecord.EventName:               Request
 1. It's not possible to filter by event Id with ILogger (with or without `LoggingEventSource`) before event is emitted.
    - how necessary is it? {Assembly.Name}.{MoreQualifiers} + log level could be a reasonable alternative. We just need to design logger names accordingly.
 
-2. OTel ILogger does not respect nested IEnumerable<string, string> without `Microsoft.Extensions.Telemetry.Abstractions`
-   - should be solvable either on otel level, or by having our logging source generators, or by explicitly writing efficient logging code
+2. ILogger does not like IEnumerable<string, string> without `Microsoft.Extensions.Telemetry.Abstractions`
+   - should be solvable either by having our logging source generators, or by explicitly writing efficient logging code without the generator help
