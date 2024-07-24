@@ -58,3 +58,16 @@ LogRecord.EventName:               Request
     <Event MSec=  "1405.5490" PID="55248" PName=    "test" TID="2936" EventName="FormattedMessage" ProviderName="Microsoft-Extensions-Logging" Level="2" FactoryID="1" LoggerName="OpenAI.Http" EventId="1" EventName="Request" _FormattedMessage="HTTP Request clientRequestId=42, method=GET, uri=https://microsoft.com/, headers={&quot;x-ms-client-request-id&quot;=&quot;42&quot;,&quot;x-ms-return-client-request-id&quot;=&quot;true&quot;,&quot;User-Agent&quot;=&quot;azsdk-net-test/1.0.0 (.NET 8.0.7; Microsoft Windows 10.0.22631)&quot;}"/>
   </PrettyPrint>
 ```
+
+#### Filtering
+
+- typical `ILogger` filters
+- `LoggingEventSource` FilterSpecs by log level and logger (assembly+) name
+
+#### Open questions/problems
+
+1. It's not possible to filter by event Id with ILogger (with or without `LoggingEventSource`) before event is emitted.
+   - how necessary is it? {Assembly.Name}.{MoreQualifiers} + log level could be a reasonable alternative. We just need to design logger names accordingly.
+
+2. OTel ILogger does not respect nested IEnumerable<string, string> without `Microsoft.Extensions.Telemetry.Abstractions`
+   - should be solvable either on otel level, or by having our logging source generators, or by explicitly writing efficient logging code

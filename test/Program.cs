@@ -6,8 +6,12 @@ using OpenTelemetry.Logs;
 
 var factory = LoggerFactory.Create(builder => builder
 .AddEventSourceLogger()
-.AddOpenTelemetry(c => c.AddConsoleExporter())
-//.AddConsole()
+.AddOpenTelemetry(c => {
+    c.AddConsoleExporter();
+    c.IncludeFormattedMessage = false;
+    c.ParseStateValues = true;
+ })
+.AddConsole()
 );
 
 var loggingPolicy = new AzureLoggingPolicy(new AzureCoreHttpLogger(factory, "OpenAI"));
