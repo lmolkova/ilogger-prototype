@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35004.147
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "test", "ConsoleApp4\test.csproj", "{E242C1ED-EE55-4C73-91D5-CE531DFBC305}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "logging-benchmark", "logging-benchmark\logging-benchmark.csproj", "{3B5EED62-3322-4F14-8254-BE2B84D1BFD0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E242C1ED-EE55-4C73-91D5-CE531DFBC305}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E242C1ED-EE55-4C73-91D5-CE531DFBC305}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E242C1ED-EE55-4C73-91D5-CE531DFBC305}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E242C1ED-EE55-4C73-91D5-CE531DFBC305}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B5EED62-3322-4F14-8254-BE2B84D1BFD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B5EED62-3322-4F14-8254-BE2B84D1BFD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B5EED62-3322-4F14-8254-BE2B84D1BFD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B5EED62-3322-4F14-8254-BE2B84D1BFD0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {690FC0DB-34CD-47E2-8FDA-24ACA6B1AD21}
+	EndGlobalSection
+EndGlobal
