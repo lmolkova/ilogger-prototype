@@ -30,18 +30,17 @@ info: OpenAI.Http[1]
 In practice people would send logs preserving the structure somewhere else where data would be queryable by individual properties
 
 ```log
-LogRecord.Timestamp:               2024-07-24T03:20:14.5481609Z
+LogRecord.Timestamp:               2024-07-24T06:11:42.9472595Z
 LogRecord.CategoryName:            OpenAI.Http
 LogRecord.Severity:                Info
 LogRecord.SeverityText:            Information
-LogRecord.FormattedMessage:        HTTP Request clientRequestId=42, method=GET, uri=https://microsoft.com/, headers={"x-ms-client-request-id"="42","x-ms-return-client-request-id"="true","User-Agent"="azsdk-net-test/1.0.0 (.NET 8.0.7; Microsoft Windows 10.0.22631)"}
-LogRecord.Body:                    HTTP Request clientRequestId=42, method=GET, uri=https://microsoft.com/, headers={"x-ms-client-request-id"="42","x-ms-return-client-request-id"="true","User-Agent"="azsdk-net-test/1.0.0 (.NET 8.0.7; Microsoft Windows 10.0.22631)"}
+LogRecord.Body:                    HTTP Request clientRequestId={clientRequestId}, method={method}, uri={uri}, headers={headers}
 LogRecord.Attributes (Key:Value):
-    OriginalFormat (a.k.a Body): HTTP Request clientRequestId={clientRequestId}, method={method}, uri={uri}, headers={headers}
-    headers: {"x-ms-client-request-id"="42","x-ms-return-client-request-id"="true","User-Agent"="azsdk-net-test/1.0.0 (.NET 8.0.7; Microsoft Windows 10.0.22631)"}
-    uri: https://microsoft.com/
-    method: GET
     clientRequestId: 42
+    method: GET
+    uri: https://microsoft.com/
+    headers: ["[x-ms-client-request-id, 42]","[x-ms-return-client-request-id, true]","[User-Agent, azsdk-net-test/1.0.0 (.NET 8.0.7; Microsoft Windows 10.0.22631)]"]
+    OriginalFormat (a.k.a Body): HTTP Request clientRequestId={clientRequestId}, method={method}, uri={uri}, headers={headers}
 LogRecord.EventId:                 1
 LogRecord.EventName:               Request
 ```
@@ -65,6 +64,14 @@ LogRecord.EventName:               Request
 - `LoggingEventSource` FilterSpecs by log level and logger (assembly+) name
 
 #### Open questions/problems
+
+0. We need a fallback in case user didn't provide `LoggerFactory`. Options:
+   - Use `LoggingEventSource` but it comes via extra dependency.
+     - Most applications should have it already via `Microsoft.Extensions.*` and we can try to resolve/create it in runtime without explicit dependency with reflection. No fallback if not present.
+     - Take explicit dependency
+   - Have a cheap barely usable ETW-friendly EventSource if logger is not configured. Don't try to have feature-parity. Apps that don't configure telemetry can't be helped
+   - Don't provide fallback option - no logging without LoggerFactory.
+     - TODO http tracing might still work
 
 1. It's not possible to filter by event Id with ILogger (with or without `LoggingEventSource`) before event is emitted.
    - how necessary is it? {Assembly.Name}.{MoreQualifiers} + log level could be a reasonable alternative. We just need to design logger names accordingly.

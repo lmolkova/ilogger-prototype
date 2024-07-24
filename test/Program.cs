@@ -12,10 +12,10 @@ var factory = LoggerFactory.Create(builder => builder
     c.IncludeFormattedMessage = false;
     c.ParseStateValues = true;
  })
-.AddConsole()
+//.AddConsole()
 );
 
-var loggingPolicy = new AzureLoggingPolicy(new AzureCoreHttpLogger(factory, "OpenAI"));
+var loggingPolicy = new AzureLoggingPolicy(new AzureCoreHttpLogger("OpenAI"));
 var pipeline = HttpPipelineBuilder.Build(new OpenAIClientOptions(), loggingPolicy);
 
 var msg = pipeline.CreateMessage();

@@ -1,13 +1,23 @@
 ﻿using Azure.Core;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.EventSource;
+using System.Reflection;
 
 namespace test;
 
 internal partial class AzureCoreHttpLogger
 {
+    // TODO this is not so simple - EventSourceLogger is defined in Microsoft.Extensions.Logging.EventSource
+    private static readonly ILoggerFactory DefaultFactory = LoggerFactory.Create(b => b.AddEventSourceLogger());
     private const int RequestEvent = 1;
 
     private readonly ILogger _logger;
+
+    public AzureCoreHttpLogger(string assemblyName) : this(DefaultFactory, assemblyName)
+    {
+
+    }
+
     public AzureCoreHttpLogger(ILoggerFactory loggerFactory, string assemblyName)
     {
         _logger = loggerFactory.CreateLogger(assemblyName + ".Http");
